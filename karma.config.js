@@ -42,9 +42,6 @@ module.exports = function (config) {
                 }
             },
             module: {
-                //preLoaders: [
-                //    {test: /\.(js|jsx)$/, loader: 'isparta', include: srcPath, exclude: testPath}
-                //],
                 loaders: [
                     {
                         test: /\.(js|jsx)$/,
