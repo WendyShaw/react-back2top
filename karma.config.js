@@ -32,13 +32,7 @@ module.exports = function (config) {
             resolve: {
                 extensions: ['', '.js', '.jsx'],
                 alias: {
-                    Form: path.join(srcPath, 'Form'),
-                    FormCheckbox: path.join(srcPath, 'FormCheckbox'),
-                    FormTextField: path.join(srcPath, 'FormTextField'),
-                    FormCheckboxGroup: path.join(srcPath, 'FormCheckboxGroup'),
-                    FormRadioButtonGroup: path.join(srcPath, 'FormRadioButtonGroup'),
-                    FormSelectField: path.join(srcPath, 'FormSelectField'),
-                    FormDatePicker: path.join(srcPath, 'FormDatePicker')
+                    'react-back2top': srcPath
                 }
             },
             module: {
