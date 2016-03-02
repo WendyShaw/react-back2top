@@ -8,65 +8,45 @@ import throttle from 'lodash.throttle';
 
 const privates = new WeakMap();
 
-function isNumber(obj) {
+const isNumber = (obj) => {
     return typeof obj === 'number' && !Number.isNaN(obj);
-}
+};
 
-function strip(number) {
+const strip = (number) => {
     return parseFloat(number.toPrecision(12));
-}
+};
 
-function someAnimating(animations) {
+const isAnimating = (animations) => {
     for (var [, animation] of animations) {
         if (animation.isAnimating) return true;
     }
     return false;
 }
 
-function scheduleAnimation(context) {
-    raf(function () {
+const scheduleAnimation = (context) => {
+    raf(() => {
         var animations = privates.get(context);
         var currentTime = now();
         var shouldUpdate = false;
         animations && animations.forEach(function (animation, name) {
             var isFunction = typeof name === 'function';
             if (!animation.isAnimating) return;
-
             var {duration, easing, endValue, startTime, startValue} = animation;
-
             var deltaTime = currentTime - startTime;
             if (deltaTime >= duration) {
                 Object.assign(animation, {isAnimating: false, startTime: currentTime, value: endValue});
             } else {
                 animation.value = strip(Easing[easing](deltaTime, startValue, endValue - startValue, duration));
             }
-
             shouldUpdate = shouldUpdate || !isFunction;
             if (isFunction) name(animation.value);
         });
-
-        if (animations && someAnimating(animations)) scheduleAnimation(context);
+        if (animations && isAnimating(animations)) scheduleAnimation(context);
         if (shouldUpdate) context.forceUpdate();
     });
-}
+};
 
 class Back2Top extends React.Component {
-    constructor(props) {
-        super(props);
-
-        this.scrollToTop = this.scrollToTop.bind(this);
-        this.updateScroll = this.updateScroll.bind(this);
-        this.shouldAnimate = this.shouldAnimate.bind(this);
-        this.animate = this.animate.bind(this);
-        this.scrollToTop = this.scrollToTop.bind(this);
-        this.isFirefox = this.isFirefox.bind(this);
-        this.getScrollTop = this.getScrollTop.bind(this);
-        this.setScrollTop = this.setScrollTop.bind(this);
-
-        this.state = {
-            visible: false
-        };
-    }
 
     static propTypes = {
         alwaysVisible: React.PropTypes.bool
@@ -75,6 +55,22 @@ class Back2Top extends React.Component {
     static FADE_DURATION = 300;
     static SCROLL_DURATION = 800;
     static VISIBILITY_HEIGHT = 400;
+
+    constructor(props) {
+        super(props);
+        this.animate = this.animate.bind(this);
+        this.scrollToTop = this.scrollToTop.bind(this);
+        this.updateScroll = this.updateScroll.bind(this);
+        this.shouldAnimate = this.shouldAnimate.bind(this);
+        this.animate = this.animate.bind(this);
+        this.scrollToTop = this.scrollToTop.bind(this);
+        this.isFirefox = this.isFirefox.bind(this);
+        this.getScrollTop = this.getScrollTop.bind(this);
+        this.setScrollTop = this.setScrollTop.bind(this);
+        this.state = {
+            visible: false
+        };
+    }
 
     componentDidMount() {
         this.throttledUpdateScroll = throttle(this.updateScroll, 100);
@@ -95,7 +91,6 @@ class Back2Top extends React.Component {
         if (!animations) {
             privates.set(this, animations = new Map());
         }
-
         var animation = animations.get(name);
         var shouldAnimate = this.shouldAnimate() && options.animation !== false;
         if (!animation || !shouldAnimate || !isNumber(endValue)) {
@@ -104,21 +99,18 @@ class Back2Top extends React.Component {
             animation = {duration, easing, endValue, isAnimating: false, startValue, value: startValue};
             animations.set(name, animation);
         }
-
         if (!duration) {
             Object.assign(animation, {endValue, value: endValue});
             animations.set(name, animation);
         }
-
         if (animation.value !== endValue && !animation.isAnimating) {
-            if (!someAnimating(animations)) scheduleAnimation(this);
+            if (!isAnimating(animations)) scheduleAnimation(this);
             var startTime = 'startTime' in options ? options.startTime : now();
             duration = duration || animation.duration;
             let easing = options.easing || animation.easing;
             let startValue = animation.value;
             Object.assign(animation, {isAnimating: true, endValue, startValue, startTime, duration, easing});
         }
-
         return animation.value;
     }
 
@@ -128,8 +120,11 @@ class Back2Top extends React.Component {
     }
 
 
-    scrollToTop() {
+    scrollToTop(event) {
         this.animate(value => this.setScrollTop(value), 0, Back2Top.SCROLL_DURATION, {startValue: this.getScrollTop()});
+        if (this.props.onClick) {
+            this.props.onClick(event);
+        }
     }
 
     isFirefox() {
@@ -147,10 +142,22 @@ class Back2Top extends React.Component {
 
     render() {
         var visible = this.props.alwaysVisible || this.state.visible;
+        let {
+            href,
+            label,
+            style,
+            onClick,
+            className,
+            ...options
+            } = this.props;
         return (
-            <a className='back-to-top' {...this.props} href="#" aria-label="Back to top"
-               style={{display: 'inline', opacity: this.animate('opacity', visible ? 1 : 0, Back2Top.FADE_DURATION)}}
-               onClick={this.scrollToTop}>
+            <a
+                href="#"
+                className={className || 'back-to-top'}
+                {...options}
+                aria-label={label || 'Back to top'}
+                style={{display: 'inline', opacity: this.animate('opacity', visible ? 1 : 0, Back2Top.FADE_DURATION)}}
+                onClick={this.scrollToTop}>
                 {this.props.children}
             </a>
         );
