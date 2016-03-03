@@ -144,8 +144,8 @@ class Back2Top extends React.Component {
         var visible = this.props.alwaysVisible || this.state.visible;
         let {
             href,
-            label,
             style,
+            target,
             onClick,
             className,
             ...options
@@ -155,7 +155,7 @@ class Back2Top extends React.Component {
                 href="#"
                 className={className || 'back-to-top'}
                 {...options}
-                aria-label={label || 'Back to top'}
+                aria-label='Back to top'
                 style={{display: 'inline', opacity: this.animate('opacity', visible ? 1 : 0, Back2Top.FADE_DURATION)}}
                 onClick={this.scrollToTop}>
                 {this.props.children}
