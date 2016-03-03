@@ -1,5 +1,7 @@
 #  Back To Top React Component
 
+[![GitHub release][github-image]][github-url]
+[![NPM downloads][downloads-image]][downloads-url]
 [![Build status][travis-image]][travis-url]
 
 A react component to perform a "back to top" action
@@ -81,5 +83,11 @@ See https://github.com/tbolis/react-back2top/blob/master/CHANGELOG.md
 
 MIT, do remember to add a reference if you find it useful :)
 
+[github-image]: https://img.shields.io/github/release/tbolis/react-back2top.svg
+[github-url]: https://github.com/tbolis/react-back2top/releases
+[npm-image]: https://img.shields.io/npm/v/react-back2top.svg?style=flat
+[npm-url]: https://www.npmjs.com/package/react-back2top
+[downloads-image]: https://img.shields.io/npm/dm/react-back2top.svg?style=flat
+[downloads-url]: https://www.npmjs.com/package/react-back2top
 [travis-image]: https://img.shields.io/travis/tbolis/react-back2top.svg?style=flat
 [travis-url]: https://travis-ci.org/tbolis/react-back2top
