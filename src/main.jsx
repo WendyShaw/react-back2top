@@ -21,7 +21,7 @@ const isAnimating = (animations) => {
         if (animation.isAnimating) return true;
     }
     return false;
-}
+};
 
 const scheduleAnimation = (context) => {
     raf(() => {
@@ -49,7 +49,14 @@ const scheduleAnimation = (context) => {
 class Back2Top extends React.Component {
 
     static propTypes = {
-        alwaysVisible: React.PropTypes.bool
+        // Make the button visible
+        alwaysVisible: React.PropTypes.bool,
+        // Duration of fade effect
+        fadeDuration: React.PropTypes.number,
+        // Duration of scroll-to-top effect
+        scrollDuration: React.PropTypes.number,
+        // Height of button to become visible
+        visibilityHeight: React.PropTypes.number
     };
 
     static FADE_DURATION = 300;
@@ -114,14 +121,15 @@ class Back2Top extends React.Component {
         return animation.value;
     }
 
-
     updateScroll() {
-        this.setState({visible: this.getScrollTop() > Back2Top.VISIBILITY_HEIGHT});
+        let {visibilityHeight} = this.props;
+        this.setState({visible: this.getScrollTop() > (visibilityHeight || Back2Top.VISIBILITY_HEIGHT)});
     }
 
-
     scrollToTop(event) {
-        this.animate(value => this.setScrollTop(value), 0, Back2Top.SCROLL_DURATION, {startValue: this.getScrollTop()});
+        let {scrollDuration} = this.props;
+        this.animate(value => this.setScrollTop(value), 0,
+            scrollDuration || Back2Top.SCROLL_DURATION, {startValue: this.getScrollTop()});
         if (this.props.onClick) {
             this.props.onClick(event);
         }
@@ -148,6 +156,7 @@ class Back2Top extends React.Component {
             target,
             onClick,
             className,
+            fadeDuration,
             ...options
             } = this.props;
         return (
@@ -156,7 +165,7 @@ class Back2Top extends React.Component {
                 className={className || 'back-to-top'}
                 {...options}
                 aria-label='Back to top'
-                style={{display: 'inline', opacity: this.animate('opacity', visible ? 1 : 0, Back2Top.FADE_DURATION)}}
+                style={{display: 'inline', opacity: this.animate('opacity', visible ? 1 : 0, fadeDuration || Back2Top.FADE_DURATION)}}
                 onClick={this.scrollToTop}>
                 {this.props.children}
             </a>

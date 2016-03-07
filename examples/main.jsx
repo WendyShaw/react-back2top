@@ -19,7 +19,7 @@ class Demo extends React.Component {
                     Scroll down for the button to appear
                 </h3>
 
-                <Back2Top>
+                <Back2Top visibilityHeight={200} scrollDuration={300}>
                     <FloatingActionButton>
                         <UpIcon/>
                     </FloatingActionButton>
