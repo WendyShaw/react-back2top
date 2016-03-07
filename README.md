@@ -71,7 +71,14 @@ npm start
 
 ##  Features
 
-TBD
+You can control the behavior of the button with the following component properties 
+
+| Property | Description |  
+|----------|-------------|
+| alwaysVisible |  Make the button always visible |
+| fadeDuration |    Duration of fade effect   |
+| scrollDuration | Duration of scroll-to-top effect |
+| visibilityHeight | Height page where button becomes visible |
 
 ## Issues
 
