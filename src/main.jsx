@@ -8,15 +8,15 @@ import throttle from 'lodash.throttle';
 
 const privates = new WeakMap();
 
-const isNumber = (obj) => {
+export const isNumber = (obj) => {
     return typeof obj === 'number' && !Number.isNaN(obj);
 };
 
-const strip = (number) => {
+export const strip = (number) => {
     return parseFloat(number.toPrecision(12));
 };
 
-const isAnimating = (animations) => {
+export const isAnimating = (animations) => {
     for (var [, animation] of animations) {
         if (animation.isAnimating) return true;
     }

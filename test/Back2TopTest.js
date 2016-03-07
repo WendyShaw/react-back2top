@@ -7,8 +7,9 @@ import React from 'react';
 import TestUtils from 'react-addons-test-utils';
 
 import Back2Top from 'react-back2top';
+import {isNumber} from '../src/main';
 
-describe('Back2Top', () => {
+describe('Back2Top Component', () => {
 
     it('loads normally', () => {
         expect(require('../src/main')).to.exist;
@@ -30,5 +31,14 @@ describe('Back2Top', () => {
         TestUtils.Simulate.click(TestUtils.findRenderedDOMComponentWithTag(MyBack2Top, 'a'));
         expect(clicked).to.be.true;
     });
+
+});
+
+describe('isNumber', () => {
+
+    it('finds number objects properly', ()=> {
+        expect(isNumber(3)).to.be.true;
+        expect(isNumber('not a number')).to.be.false;
+    })
 
 });
