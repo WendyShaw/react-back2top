@@ -17,8 +17,10 @@
   },
   "main": "lib/index.js",
   "scripts": {
+    "clean": "rimraf build/ & rimraf lib/",
     "prebuild": "rimraf lib",
     "build": "babel ./src --out-dir ./lib",
+    "build:examples": "webpack --config webpack.examples.cfg.js",
     "prepublish": "npm run test && npm run build",
     "lint": "eslint ./src",
     "lint:fix": "eslint --fix ./src",

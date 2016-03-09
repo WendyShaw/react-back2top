@@ -1,3 +1,9 @@
+examples/
+test/
+.travis.yml
+
+
+
 ### Linux template
 *~
 
