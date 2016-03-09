@@ -69,6 +69,8 @@ npm install
 npm start
 ```
 
+You can also check the live showcase here: http://tbolis.github.io/showcase/react-back2top/
+
 ##  Features
 
 You can control the behavior of the button with the following component properties 
