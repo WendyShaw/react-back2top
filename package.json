@@ -13,7 +13,10 @@
   ],
   "homepage": "https://github.com/tbolis/react-back2top",
   "bugs": "https://github.com/tbolis/react-back2top/issues",
-  "author": "Thomas Bolis",
+  "author": {
+    "name": "Thomas Bolis",
+    "email": "thomas.bolis@gmail.com"
+  },
   "license": "MIT",
   "repository": {
     "type": "git",
