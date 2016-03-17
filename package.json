@@ -5,7 +5,11 @@
   "keywords": [
     "back",
     "top",
-    "react"
+    "react",
+    "back-to-top",
+    "back2top",
+    "back-2-top",
+    "button"
   ],
   "homepage": "https://github.com/tbolis/react-back2top",
   "bugs": "https://github.com/tbolis/react-back2top/issues",
