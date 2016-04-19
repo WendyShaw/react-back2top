@@ -16,18 +16,18 @@ describe('Back2Top Component', () => {
     });
 
     it('has default className', () => {
-        const MyBack2Top = TestUtils.renderIntoDocument(<Back2Top/>);
+        const MyBack2Top = TestUtils.renderIntoDocument(<Back2Top alwaysVisible={true}/>);
         expect(TestUtils.findRenderedDOMComponentWithClass(MyBack2Top, 'back-to-top')).to.exist;
     });
 
     it('can change className', () => {
-        const MyBack2Top = TestUtils.renderIntoDocument(<Back2Top className='my-class-name'/>);
+        const MyBack2Top = TestUtils.renderIntoDocument(<Back2Top className='my-class-name' alwaysVisible={true}/>);
         expect(TestUtils.findRenderedDOMComponentWithClass(MyBack2Top, 'my-class-name')).to.exist;
     });
 
     it('custom onClick is executed', () => {
         let clicked = false;
-        const MyBack2Top = TestUtils.renderIntoDocument(<Back2Top onClick={(e) => clicked=true}/>);
+        const MyBack2Top = TestUtils.renderIntoDocument(<Back2Top alwaysVisible={true} onClick={(e) => clicked=true}/>);
         TestUtils.Simulate.click(TestUtils.findRenderedDOMComponentWithTag(MyBack2Top, 'a'));
         expect(clicked).to.be.true;
     });

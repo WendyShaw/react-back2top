@@ -126,12 +126,13 @@ class Back2Top extends React.Component {
         this.setState({visible: this.getScrollTop() > (visibilityHeight || Back2Top.VISIBILITY_HEIGHT)});
     }
 
-    scrollToTop(event) {
+    scrollToTop(e) {
+        if (e) e.preventDefault();
         let {scrollDuration} = this.props;
         this.animate(value => this.setScrollTop(value), 0,
             scrollDuration || Back2Top.SCROLL_DURATION, {startValue: this.getScrollTop()});
         if (this.props.onClick) {
-            this.props.onClick(event);
+            this.props.onClick(e);
         }
     }
 
@@ -159,13 +160,14 @@ class Back2Top extends React.Component {
             fadeDuration,
             ...options
             } = this.props;
+        let opacity = this.animate('opacity', visible ? 1 : 0, fadeDuration || Back2Top.FADE_DURATION);
+        if (opacity === 0) return false;
         return (
             <a
-                href="#"
                 className={className || 'back-to-top'}
                 {...options}
                 aria-label='Back to top'
-                style={{display: 'inline', opacity: this.animate('opacity', visible ? 1 : 0, fadeDuration || Back2Top.FADE_DURATION)}}
+                style={{display: 'inline', opacity: opacity}}
                 onClick={this.scrollToTop}>
                 {this.props.children}
             </a>
