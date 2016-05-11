@@ -1,7 +1,8 @@
 {
   "parser": "babel-eslint",
   "plugins": [
-    "react"
+    "react",
+    "eslint-plugin-react"
   ],
   "ecmaFeatures": {
     "jsx": true,
@@ -11,7 +12,7 @@
     "browser": true,
     "amd": true,
     "es6": true,
-    "node": true
+    "node": false
   },
   "rules": {
     "comma-dangle": 1,
@@ -23,6 +24,7 @@
     "global-strict": 0,
     "no-extra-semi": 1,
     "no-underscore-dangle": 0,
+    "no-extra-parens": 0,
     "no-console": 1,
     "no-unused-vars": 1,
     "no-trailing-spaces": [
@@ -31,8 +33,9 @@
         "skipBlankLines": true
       }
     ],
-    "no-unreachable": 1,
     "no-alert": 0,
-    "react/jsx-uses-react": 1
+    "no-unreachable": 1,
+    "react/jsx-uses-react": 1,
+    "react/jsx-uses-vars": 1
   }
 }
