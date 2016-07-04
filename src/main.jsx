@@ -4,7 +4,7 @@ import raf from 'raf';
 import React from 'react';
 import Easing from 'easing-js';
 import now from 'performance-now';
-import throttle from 'lodash.throttle';
+import _ from 'lodash';
 
 const privates = new WeakMap();
 
@@ -80,7 +80,7 @@ class Back2Top extends React.Component {
     }
 
     componentDidMount() {
-        this.throttledUpdateScroll = throttle(this.updateScroll, 100);
+        this.throttledUpdateScroll = _.throttle(this.updateScroll, 100);
         window.addEventListener('scroll', this.throttledUpdateScroll);
     }
 
