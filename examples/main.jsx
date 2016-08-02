@@ -1,15 +1,18 @@
-import React from 'react';
+/*global module*/
+
+import React,{Component} from 'react';
 
 import Back2Top from '../src/main';
 import {FloatingActionButton} from 'material-ui';
+
 import getMuiTheme from 'material-ui/styles/getMuiTheme';
 import UpIcon from 'material-ui/svg-icons/navigation/arrow-upward';
 import MuiThemeProvider from 'material-ui/styles/MuiThemeProvider';
 
 import './styles.css';
 
-class Demo extends React.Component {
-    constructor(props, context) {
+class Demo extends Component {
+    constructor(props) {
         super(props);
     }
 

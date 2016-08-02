@@ -1,7 +1,10 @@
+/* eslint no-unused-vars:0 */
+
 'use strict';
 
+import React,{Component,PropTypes} from 'react';
+
 import raf from 'raf';
-import React from 'react';
 import Easing from 'easing-js';
 import now from 'performance-now';
 import _ from 'lodash';
@@ -46,17 +49,22 @@ const scheduleAnimation = (context) => {
     });
 };
 
-class Back2Top extends React.Component {
+class Back2Top extends Component {
 
     static propTypes = {
+
         // Make the button visible
-        alwaysVisible: React.PropTypes.bool,
+        alwaysVisible: PropTypes.bool,
+
         // Duration of fade effect
-        fadeDuration: React.PropTypes.number,
+        fadeDuration: PropTypes.number,
+
         // Duration of scroll-to-top effect
-        scrollDuration: React.PropTypes.number,
+        scrollDuration: PropTypes.number,
+
         // Height of button to become visible
-        visibilityHeight: React.PropTypes.number
+        visibilityHeight: PropTypes.number
+
     };
 
     static FADE_DURATION = 300;
@@ -65,6 +73,7 @@ class Back2Top extends React.Component {
 
     constructor(props) {
         super(props);
+
         this.animate = this.animate.bind(this);
         this.scrollToTop = this.scrollToTop.bind(this);
         this.updateScroll = this.updateScroll.bind(this);
@@ -74,6 +83,7 @@ class Back2Top extends React.Component {
         this.isFirefox = this.isFirefox.bind(this);
         this.getScrollTop = this.getScrollTop.bind(this);
         this.setScrollTop = this.setScrollTop.bind(this);
+
         this.state = {
             visible: false
         };
@@ -128,11 +138,11 @@ class Back2Top extends React.Component {
 
     scrollToTop(e) {
         if (e) e.preventDefault();
-        let {scrollDuration} = this.props;
+        let {scrollDuration,onClick} = this.props;
         this.animate(value => this.setScrollTop(value), 0,
             scrollDuration || Back2Top.SCROLL_DURATION, {startValue: this.getScrollTop()});
-        if (this.props.onClick) {
-            this.props.onClick(e);
+        if (onClick) {
+            onClick(e);
         }
     }
 
@@ -151,13 +161,15 @@ class Back2Top extends React.Component {
 
     render() {
         var visible = this.props.alwaysVisible || this.state.visible;
-        let {
-            href,
+        let {href,
             style,
             target,
             onClick,
             className,
             fadeDuration,
+            visibilityHeight,
+            scrollDuration,
+            children,
             ...options
             } = this.props;
         let opacity = this.animate('opacity', visible ? 1 : 0, fadeDuration || Back2Top.FADE_DURATION);
@@ -166,10 +178,10 @@ class Back2Top extends React.Component {
             <a
                 className={className || 'back-to-top'}
                 {...options}
-                aria-label='Back to top'
+                aria-label='Back2Top'
                 style={{display: 'inline', opacity: opacity}}
                 onClick={this.scrollToTop}>
-                {this.props.children}
+                {children}
             </a>
         );
     }
