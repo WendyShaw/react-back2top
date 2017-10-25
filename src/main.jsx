@@ -151,7 +151,7 @@ class Back2Top extends Component {
     }
 
     getScrollTop() {
-        return this.isFirefox() ? document.documentElement.scrollTop : document.body.scrollTop;
+        return document.documentElement.scrollTop;
     }
 
     setScrollTop(value) {
