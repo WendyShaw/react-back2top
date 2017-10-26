@@ -1,21 +1,17 @@
+/*global __dirname,module*/
+/*eslint no-console:0 */
+
 const path = require('path');
 const srcPath = path.join(__dirname, 'src');
 const examplesPath = path.join(__dirname, 'examples');
 
 const HtmlWebpackPlugin = require('html-webpack-plugin');
-const IgnorePlugin = require('webpack/lib/IgnorePlugin');
 const DefinePlugin = require('webpack/lib/DefinePlugin');
-const NoErrorsPlugin = require('webpack/lib/NoErrorsPlugin');
-const DedupePlugin = require('webpack/lib/optimize/DedupePlugin');
 const UglifyJsPlugin = require('webpack/lib/optimize/UglifyJsPlugin');
-const OccurenceOrderPlugin = require('webpack/lib/optimize/OccurenceOrderPlugin');
-const HotModuleReplacementPlugin = require('webpack/lib/HotModuleReplacementPlugin');
+const NoEmitOnErrorsPlugin = require('webpack/lib/NoEmitOnErrorsPlugin');
 const AggressiveMergingPlugin = require('webpack/lib/optimize/AggressiveMergingPlugin');
 
-const port = 23000;
-
-var config = {
-    port: port,
+const config = {
     entry: {
         examples: path.join(examplesPath, 'run')
     },
@@ -25,32 +21,37 @@ var config = {
         publicPath: ''
     },
     resolve: {
-        extensions: ['', '.js', '.jsx']
+        extensions: ['.js', '.jsx']
     },
-    debug: false,
     cache: true,
     devtool: 'sourcemap',
     module: {
-        loaders: [
+        rules: [
             {test: /\.html$/, loader: 'html-loader', include: [examplesPath], exclude: /base\.html$/},
             {test: /\.css$/, loader: 'style-loader!css-loader'},
             {
                 test: /\.(js|jsx)$/,
                 include: [srcPath, examplesPath],
                 exclude: /(node_modules|bower_components|lib)/,
-                loaders: ['babel']
+                loaders: ['babel-loader']
             }
         ]
     },
     plugins: [
-        new DedupePlugin(),
-        new UglifyJsPlugin(),
-        new OccurenceOrderPlugin(),
+        new DefinePlugin({
+            'process.env': {
+                NODE_ENV: JSON.stringify('production')
+            }
+        }),
+        new NoEmitOnErrorsPlugin(),
         new AggressiveMergingPlugin(),
-        new IgnorePlugin(new RegExp('^(fs|ipc)$')),
-        new DefinePlugin({'process.env.NODE_ENV': '"production"'}),
-        new HotModuleReplacementPlugin(),
-        new NoErrorsPlugin(),
+        new UglifyJsPlugin({
+            sourceMap: true,
+            compress: {
+                warnings: false,
+                screw_ie8: true
+            }
+        }),
         new HtmlWebpackPlugin({
             title: 'React-Back2Top Button',
             description: 'React based back to top button',

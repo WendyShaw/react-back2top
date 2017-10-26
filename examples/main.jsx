@@ -1,6 +1,6 @@
 /*global module*/
 
-import React,{Component} from 'react';
+import React, {Component} from 'react';
 
 import Back2Top from '../src/main';
 import {FloatingActionButton} from 'material-ui';
@@ -625,4 +625,4 @@ class Demo extends Component {
     }
 }
 
-module.exports = Demo;
+export default Demo;

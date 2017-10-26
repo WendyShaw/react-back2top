@@ -44,6 +44,7 @@ build/
 dist/
 lib/
 
+yarn.lock
 
 ### OSX template
 .DS_Store

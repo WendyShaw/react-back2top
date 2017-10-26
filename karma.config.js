@@ -1,12 +1,18 @@
-const path = require('path');
+/*global __dirname,module*/
 
+const path = require('path');
 const srcPath = path.join(__dirname, 'src');
 const testPath = path.join(__dirname, 'test');
 
 module.exports = function (config) {
     config.set({
         basePath: './',
-        browsers: ['PhantomJS'],
+        browsers: ['jsdom'],
+        // Continuous Integration mode
+        // if true, Karma captures browsers, runs the tests and exits
+        singleRun: true,
+        concurrency: Infinity,
+        frameworks: ['mocha', 'chai'],
         files: [
             'test/**/*Test.js'
         ],
@@ -14,23 +20,18 @@ module.exports = function (config) {
             'test/**/*Test.js': ['webpack', 'sourcemap']
         },
         captureTimeout: 60000,
-        frameworks: ['phantomjs-shim', 'mocha', 'chai'],
         client: {
             mocha: {},
             captureConsole: false
         },
-        singleRun: true,
         reporters: ['mocha'], //, 'coverage'
         webpack: {
             node: {
                 fs: 'empty'
             },
-            modulesDirectories: [
-                'node_modules'
-            ],
             devtool: 'inline-source-map',
             resolve: {
-                extensions: ['', '.js', '.jsx'],
+                extensions: ['.js', '.jsx'],
                 alias: {
                     'react-back2top': srcPath
                 }
@@ -45,12 +46,10 @@ module.exports = function (config) {
                     }
                 ]
             },
-            debug: false,
             stats: {
                 colors: true,
                 reasons: true
-            },
-            progress: true
+            }
         },
         webpackServer: {
             noInfo: true

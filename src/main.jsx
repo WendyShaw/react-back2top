@@ -2,11 +2,11 @@
 
 'use strict';
 
-import React,{Component,PropTypes} from 'react';
-
-import raf from 'raf';
-import Easing from 'easing-js';
+import React, {Component} from 'react';
+import PropTypes from 'prop-types';
 import now from 'performance-now';
+import Easing from 'easing-js';
+import raf from 'raf';
 import _ from 'lodash';
 
 const privates = new WeakMap();
@@ -80,7 +80,6 @@ class Back2Top extends Component {
         this.shouldAnimate = this.shouldAnimate.bind(this);
         this.animate = this.animate.bind(this);
         this.scrollToTop = this.scrollToTop.bind(this);
-        this.isFirefox = this.isFirefox.bind(this);
         this.getScrollTop = this.getScrollTop.bind(this);
         this.setScrollTop = this.setScrollTop.bind(this);
 
@@ -144,10 +143,6 @@ class Back2Top extends Component {
         if (onClick) {
             onClick(e);
         }
-    }
-
-    isFirefox() {
-        return navigator.userAgent.toLowerCase().indexOf('firefox') !== -1;
     }
 
     getScrollTop() {

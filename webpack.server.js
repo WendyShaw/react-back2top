@@ -1,13 +1,12 @@
+/*global __dirname*/
 /*eslint no-console:0 */
-
-require('core-js/fn/object/assign');
 
 const path = require('path');
 const webpack = require('webpack');
 const WebpackDevServer = require('webpack-dev-server');
 
 const HtmlWebpackPlugin = require('html-webpack-plugin');
-const NoErrorsPlugin = require('webpack/lib/NoErrorsPlugin');
+const NoEmitOnErrorsPlugin = require('webpack/lib/NoEmitOnErrorsPlugin');
 const HotModuleReplacementPlugin = require('webpack/lib/HotModuleReplacementPlugin');
 
 const srcPath = path.join(__dirname, 'src');
@@ -17,8 +16,7 @@ const OpenBrowserPlugin = require('open-browser-webpack-plugin');
 
 const port = 23000;
 
-var config = {
-    port: port,
+const config = {
     entry: {
         examples: [
             'webpack-dev-server/client?http://localhost:' + port,
@@ -32,14 +30,13 @@ var config = {
         publicPath: '/'
     },
     resolve: {
-        extensions: ['', '.js', '.jsx'],
+        extensions: ['.js', '.jsx'],
         alias: {
             'react-back2top': path.join(__dirname, '/src')
         }
     },
-    debug: true,
     cache: true,
-    devtool: 'eval',
+    devtool: 'sourcemap',
     devServer: {
         historyApiFallback: true,
         stats: {colors: true},
@@ -49,28 +46,20 @@ var config = {
         hot: true
     },
     module: {
-        preLoaders: [
-            {
-                test: /\.(js|jsx)$/,
-                include: [srcPath],
-                exclude: /(node_modules|bower_components)/,
-                loader: 'eslint-loader'
-            }
-        ],
-        loaders: [
+        rules: [
             {test: /\.html$/, loader: 'html-loader', include: [examplesPath], exclude: /base\.html$/},
             {test: /\.css$/, loader: 'style-loader!css-loader'},
             {
                 test: /\.(js|jsx)$/,
                 include: [srcPath, examplesPath],
                 exclude: /(node_modules|bower_components)/,
-                loaders: ['react-hot', 'babel-loader']
+                loaders: ['babel-loader']
             }
         ]
     },
     plugins: [
         new HotModuleReplacementPlugin(),
-        new NoErrorsPlugin(),
+        new NoEmitOnErrorsPlugin(),
         new HtmlWebpackPlugin({
             title: 'React-Back2Top Button',
             description: 'React based back to top button',
@@ -85,10 +74,10 @@ var config = {
 };
 
 new WebpackDevServer(webpack(config), config.devServer)
-    .listen(config.port, 'localhost', function (err) {
+    .listen(port, 'localhost', function (err) {
             if (err) {
                 console.log(err);
             }
-            console.log('Serving from http://localhost:' + config.port);
+            console.log('Serving from http://localhost:' + port);
         }
     );
